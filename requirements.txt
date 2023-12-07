@@ -2,3 +2,4 @@ Pandas
 scikit-learn 
 Numpy
 -e .
+seaborn
