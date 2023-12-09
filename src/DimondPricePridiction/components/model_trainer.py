@@ -52,9 +52,22 @@ class ModelTrainer:
             print(f'best model found, model name:{best_model_name} , R2 Score :{best_model_score}')
             print('\n=======================================\n')
             logging.info(f'best model found, model name:{best_model_name}, R2 Score: {best_model_score}')
+            
+            train_arr= np.c_[input_feature_train_arr, np.array(target_feature_train_df)]
+            test_arr= np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
+            
+            
+            
             save_object(
                 file_path= self.model_trainer_config.trained_model_file_path,
                 obj= best_model
+            )
+
+            logging.info(" preprocessing pickle file object")
+
+            return(
+                train_arr,
+                test_arr
             )
 
         except Exception as e:
