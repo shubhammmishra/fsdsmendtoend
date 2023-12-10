@@ -35,7 +35,7 @@ class ModelTrainer:
                 'ElasticNet':ElasticNet()
             }
             model_report:dict= evaluate_model(X_train,y_train,X_test,y_test,models)
-            print(model_report)
+            print('Model Report:',model_report)
             print("\n=================================================\n")
             logging.info(f'Model Report:{model_report}')
 
@@ -43,8 +43,10 @@ class ModelTrainer:
             # to get best model from dictionary
             best_model_score= max(sorted(model_report.values()))
 
-            best_model_name= list(best_model_score.keys())[
-                    list(best_model_score.values().index(best_model_score))
+    
+
+            best_model_name= list(model_report.keys())[
+                    list(model_report.values()).index(best_model_score)
             ]
 
             best_model= models[best_model_name]
@@ -52,8 +54,8 @@ class ModelTrainer:
             print('\n=======================================\n')
             logging.info(f'best model found, model name:{best_model_name}, R2 Score: {best_model_score}')
             
-            train_arr= np.c_[input_feature_train_arr, np.array(target_feature_train_df)]
-            test_arr= np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
+           # train_arr= np.c_[input_feature_train_arr, np.array(target_feature_train_df)]
+            #test_arr= np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
             
             
             
@@ -64,10 +66,10 @@ class ModelTrainer:
 
             logging.info(" preprocessing pickle file object")
 
-            return(
-                train_arr,
-                test_arr
-            )
+            #return(
+             #   train_arr,
+            #    test_arr
+             #)
 
         except Exception as e:
             raise customexception(e,sys)
