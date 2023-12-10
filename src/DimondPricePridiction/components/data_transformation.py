@@ -11,7 +11,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OrdinalEncoder,StandardScaler
-from src.DimondPricePridiction.utils import save_object
+from src.DimondPricePridiction.utils.utils import save_object
 
 @dataclass
 class DataTransformationConfig:
@@ -49,13 +49,13 @@ class DataTransformation:
             cat_pipeline= Pipeline(
                 steps=[
                 ('imputer',SimpleImputer(strategy='most_frequent')),
-                ('ordinalencoder',OrdinalEncoder(categories=[cut_categories,color_categories,clarity_categories]))
+                ('ordinalencoder',OrdinalEncoder(categories=[cut_categories,color_categories,clarity_categories])),
                 ('scaler',StandardScaler())
                 ]
             )
 
             preprocessor= ColumnTransformer([
-                ('num_pipeline',num_pipeline,numerical_cols)
+                ('num_pipeline',num_pipeline,numerical_cols),
                 ('cat_pipeline',cat_pipeline,categorical_cols)
             ])
             return preprocessor
@@ -81,16 +81,25 @@ class DataTransformation:
             input_feature_train_df= train_df.drop(columns=drop_columns, axis= 1)
             target_feature_train_df= train_df[target_column_name]
 
-            input_feature_train_arr= preprocessing_obj.fit_transform(input_feature_train_df)
-            input_feature_test_arr= preprocessing_obj.transform(input_feature_train_df)
+            input_feature_test_df= test_df.drop(columns=drop_columns, axis= 1)
+            target_feature_test_df= test_df[target_column_name]
 
-            logging.info("Applyingi preprocessing on train and test datasets")
+            input_feature_train_arr= preprocessing_obj.fit_transform(input_feature_train_df)
+            input_feature_test_arr= preprocessing_obj.transform(input_feature_test_df)
+
+            
+            logging.info("Applying preprocessing on train and test datasets")
 
             save_object(
                 file_path= self.data_transformation_config.preprocessor_obj_file_path,
                 obj= preprocessing_obj
             )
-
+            
+            return(
+                input_feature_train_arr,
+                input_feature_test_arr
+            )
         except Exception as e:
             logging.info("Exception initiate in data ingestion")
             raise customexception(e,sys)
+        

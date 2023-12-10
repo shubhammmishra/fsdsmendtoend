@@ -6,10 +6,9 @@ import sys
 from src.DimondPricePridiction.exception import customexception
 from src.DimondPricePridiction.logger import logging
 from dataclasses import dataclass
-from src.DimondPricePridiction.utils import save_object
-from src.DimondPricePridiction.utils import evaluate_model
-
-from sklearn.model_selection import LinearRegression, Ridge, Lasso, ElasticNet
+from src.DimondPricePridiction.utils.utils import save_object
+from src.DimondPricePridiction.utils.utils import evaluate_model
+from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
 
 class ModelTrainerConfig:
     trained_model_file_path= os.path.join("artifacts","model.pkl")
@@ -20,11 +19,11 @@ class ModelTrainer:
         self.model_trainer_config= ModelTrainerConfig()
 
 
-    def initiate_model_training(self):
+    def initiate_model_training(self,train_array, test_array):
         try:
             logging.info("spiltting Dependent and Independent variable from train and test data")
             X_train, y_train, X_test, y_test=(
-                train_arrary[:,:-1],
+                train_array[:,:-1],
                 train_array[:,-1],
                 test_array[:,:-1],
                 test_array[:,-1]
@@ -71,4 +70,4 @@ class ModelTrainer:
             )
 
         except Exception as e:
-            pass
+            raise customexception(e,sys)
