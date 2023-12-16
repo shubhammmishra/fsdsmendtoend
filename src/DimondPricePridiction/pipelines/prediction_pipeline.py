@@ -14,6 +14,8 @@ class PredictPipeline:
         try:
             preprocessor_path= os.path.join("artifacts","preprocessor.pkl")
             model_path= os.path.join("artifacts","model.pkl")
+            print(preprocessor_path)
+            print(model_path)
 
             preprocessor= load_object(preprocessor_path)
             model= load_object(model_path)
@@ -25,7 +27,7 @@ class PredictPipeline:
             return pred
         
         except Exception as e:
-            raise customexception
+            raise customexception(e,sys)
         
 class CustomData:
     def __init__(self,
