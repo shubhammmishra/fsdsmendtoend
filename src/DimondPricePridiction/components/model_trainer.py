@@ -51,7 +51,7 @@ class ModelTrainer:
 
             best_model= models[best_model_name]
             print(f'best model found, model name:{best_model_name} , R2 Score :{best_model_score}')
-            print('\n=======================================\n')
+            print('\n================================================\n')
             logging.info(f'best model found, model name:{best_model_name}, R2 Score: {best_model_score}')
             
            # train_arr= np.c_[input_feature_train_arr, np.array(target_feature_train_df)]

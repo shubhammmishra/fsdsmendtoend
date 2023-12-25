@@ -14,19 +14,24 @@ class PredictPipeline:
         try:
             preprocessor_path= os.path.join("artifacts","preprocessor.pkl")
             model_path= os.path.join("artifacts","model.pkl")
-            print(preprocessor_path)
-            print(model_path)
+            print('model path',model_path)
+            print('preprocessor path',preprocessor_path)
+            
 
             preprocessor= load_object(preprocessor_path)
             model= load_object(model_path)
+            
+            
 
             scaled_data= preprocessor.transform(features)
+            print('scaled data with length',len(scaled_data))
 
             pred= model.predict(scaled_data)
             
             return pred
         
         except Exception as e:
+            logging.info('exception is in predict method',e)
             raise customexception(e,sys)
         
 class CustomData:
@@ -73,3 +78,9 @@ class CustomData:
         except Exception as e:
             logging.info('Exception occured in prediction pipeline')
             raise customexception(e,sys)
+
+ob= CustomData(1.52,62.2,58.0,7.27,7.33,4.55,"Premium","F","VS2")
+data= ob.get_data_as_dataframe()
+ob1= PredictPipeline()
+value= ob1.predict(data)
+#print('value:',value)

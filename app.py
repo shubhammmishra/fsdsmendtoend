@@ -31,13 +31,16 @@ def predict_datapoints():
         )
     
     final_data= data.get_data_as_dataframe()
+    print('final_data',final_data)
+
+    
 
     predict_pipeline= PredictPipeline()
 
     pred= predict_pipeline.predict(final_data)
-
+    
     result= round(pred[0],2)
-
+    
     return render_template("result.html",final_result= result)
 
 if __name__ == "__main__":
