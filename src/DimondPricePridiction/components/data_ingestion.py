@@ -4,7 +4,7 @@ import numpy as np
 from src.DimondPricePridiction.logger import logging
 from src.DimondPricePridiction.exception import customexception
 from sklearn.model_selection import train_test_split
-from dataclasses import dataclass
+#from dataclasses import dataclass
 from pathlib import Path
 
 class DataIngestionConfig:
